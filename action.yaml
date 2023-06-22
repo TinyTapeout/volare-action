@@ -1,0 +1,35 @@
+name: 'Volare Action'
+description: 'GitHub action for installing open source PDKs using volare'
+branding:
+  color: purple
+  icon: terminal
+
+inputs:
+  pdk_name:
+    description: 'PDK Name (e.g. sky130)'
+    default: 'sky130'
+  pdk_version:
+    description: 'PDK Version (e.g. 12df12e2e74145e31c5a13de02f9a1e176b56e67)'
+    required: true
+  pdk_root:
+    description: 'PDK Directory (e.g. ~/.volare)'
+    default: '~/.volare'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache
+      id: cache-pdk
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache
+        key: ${{ runner.os }}-pdk-${{ inputs.pdk_name }}-${{ inputs.pdk_version }}
+
+    - name: Install Sky130 PDK
+      shell: bash
+      if: steps.cache-primes.outputs.cache-hit != 'true'
+      run: |
+        pip3 install volare
+        volare enable --pdk "${{ inputs.pdk_name }}" "${{ inputs.pdk_version }}"
+      env:
+        PDK_ROOT: ${{ inputs.pdk_root }}
