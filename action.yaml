@@ -27,7 +27,7 @@ runs:
 
     - name: Install Sky130 PDK
       shell: bash
-      if: steps.cache-primes.outputs.cache-hit != 'true'
+      if: steps.cache-pdk.outputs.cache-hit != 'true'
       run: |
         pip3 install volare
         volare enable --pdk "${{ inputs.pdk_name }}" "${{ inputs.pdk_version }}"
