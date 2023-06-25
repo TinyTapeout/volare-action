@@ -25,7 +25,7 @@ Add the following step to your workflow:
 
 ## Updating the action
 
-To update the release tag of the action, run the following command (replace `tt04` with the current tiny tapeout version):
+To update the release tag of the action, run the following commands:
 
 ```bash
 git tag -fa v1 -m "Update action"
