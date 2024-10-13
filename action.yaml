@@ -29,7 +29,7 @@ runs:
       shell: bash
       if: steps.cache-pdk.outputs.cache-hit != 'true'
       run: |
-        pip3 install volare==0.19.1
+        pip3 install --break-system-packages volare==0.19.1
         volare enable --pdk "${{ inputs.pdk_name }}" "${{ inputs.pdk_version }}"
       env:
         PDK_ROOT: ${{ inputs.pdk_root }}
